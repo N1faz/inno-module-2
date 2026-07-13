@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моё Flask-приложение</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        .time {
+            font-size: 1.5em;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+        }
+        .info {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: #4CAF50;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        .links {
+            margin-top: 30px;
+        }
+        .links a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            padding: 8px 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+        .links a:hover {
+            background: rgba(255,255,255,0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Flask App</h1>
+        <p style="font-size: 1.2em;">Работает в Docker контейнере!</p>
+        
+        <div class="time">
+            🕐 {{ time }}
+        </div>
+        
+        <div class="info">
+            <h3>📊 Информация</h3>
+            <p><strong>Хост:</strong> {{ hostname }}</p>
+            <p><strong>Статус:</strong> <span class="badge">✅ RUNNING</span></p>
+            <p><strong>Порт:</strong> 5000</p>
+            <p><strong>Сервер:</strong> nginx + gunicorn</p>
+        </div>
+        
+        <div class="links">
+            <a href="/health">🔍 Health Check</a>
+            <a href="/info">ℹ️ Info</a>
+        </div>
+    </div>
+</body>
+</html>
