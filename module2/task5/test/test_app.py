@@ -1,5 +1,6 @@
-import pytest
-from app import add, multiply
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 def test_add():
     assert add(2, 3) == 5

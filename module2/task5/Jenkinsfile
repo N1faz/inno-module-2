@@ -3,12 +3,12 @@ pipeline {
     stages {
         stage('Install') {
             steps {
-                sh 'pip3 install pytest'
+                sh 'pip3 install pytest --break-system-packages'
             }
         }
         stage('Test') {
             steps {
-                sh 'pytest'
+                sh '/var/jenkins_home/.local/bin/pytest'
             }
         }
     }
