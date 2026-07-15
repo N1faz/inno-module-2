@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+    stages {
+        stage ('Check docker') {
+            steps {
+                sh 'docker ps'
+            }
+        }
+        stage ('Build image') {
+            steps {
+                sh 'docker build -t task10:${BUILD_NUMBER} ./module2/task10'
+            }
+        }
+        stage ('Push image') {
+            steps {
+                withCredentials ([
+                    usernamePassword (
+                        credentialsId: 'docker-hub-credentials',
+                        usernameVariable: 'DOCKER_USERNAME',
+                        passwordVariable: 'DOCKER_PASSWORD'
+                    )
+                ])  { sh '''
+                        echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+                        docker tag task10:${BUILD_NUMBER} ${DOCKER_USERNAME}/task10:${BUILD_NUMBER}
+                        docker tag task10:${BUILD_NUMBER} ${DOCKER_USERNAME}/task10:latest
+                        docker push ${DOCKER_USERNAME}/task10:${BUILD_NUMBER}
+                        docker push ${DOCKER_USERNAME}/task10:latest
+                      '''
+                }
+            }
+        }
+    }
+}
