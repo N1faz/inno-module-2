@@ -14,4 +14,4 @@ spec:
     spec:
       containers:
         - name: app
-          image: nginx:IMAGE_TAG
+          image: n1faz/task10:IMAGE_TAG
