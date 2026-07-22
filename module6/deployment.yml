@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment-module6
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: inno-app
+  template:
+    metadata:
+      labels:
+        app: inno-app
+    spec:
+      containers:
+        - name: app
+          image: nginx:IMAGE_TAG

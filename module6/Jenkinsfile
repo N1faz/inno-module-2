@@ -14,5 +14,13 @@ pipeline {
                }
            }
        }
+       stage('Deploy to k8s') {
+           steps {
+               withCredentials([file(credentialsId: 'kubeconfig-minikube', variable: 'KUBECONFIG')]) {
+                   sh "sed -i 's/IMAGE_TAG/${BUILD_NUMBER}/g' module6/deployment.yml"
+                   sh 'kubectl apply -f module6/deployment.yml'
+               }
+           }
+       }
    }
 }
