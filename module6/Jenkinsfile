@@ -8,8 +8,10 @@ pipeline {
    stages {
        stage('Check kubectl') {
            steps {
-               sh 'kubectl version --client'
-               sh 'kubectl get pods'
+               withCredentials([file(credentialsId: 'kubeconfig-minikube', variable: 'KUBECONFIG')]) {
+                   sh 'kubectl version --client'
+                   sh 'kubectl get pods'
+               }
            }
        }
    }
