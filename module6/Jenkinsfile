@@ -47,5 +47,22 @@ pipeline {
                }
            }
        }
+       stage('Smoke test') {
+           steps {
+               withCredentials([file(credentialsId: 'kubeconfig-minikube', variable: 'KUBECONFIG')]) {
+                   script {
+                       try {
+                           sh 'kubectl rollout status deployment/app-deployment-module6 --timeout=30s'
+                           sh 'kubectl logs deployment/app-deployment-module6 --tail=5 | grep "Hello from Docker Hub"'
+                           echo "All is Good!!!"
+                       } catch (Exception e) {
+                           echo "Test failed"
+                           echo "Ошибка: ${e.getMessage()}"
+                           sh 'helm rollback my-app'    
+                       }
+                   }
+               }
+           }
+       }
    }
 }
