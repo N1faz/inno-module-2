@@ -14,4 +14,4 @@ spec:
     spec:
       containers:
         - name: app
-          image: n1faz/task10:IMAGE_TAG
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

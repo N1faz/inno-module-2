@@ -1,0 +1,4 @@
+image:
+  repository: n1faz/task10
+  tag: latest
+  pullPolicy: Always

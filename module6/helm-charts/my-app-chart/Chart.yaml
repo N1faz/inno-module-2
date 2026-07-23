@@ -1,0 +1,4 @@
+apiVersion: v2
+name: my-app-chart
+description: A helm chart for Kuber
+version: 1.0

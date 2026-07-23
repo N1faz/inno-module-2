@@ -15,6 +15,10 @@ pipeline {
                         passwordVariable: 'DOCKER_PASSWORD'
                     )
                 ])  { sh '''
+                        apk add --no-cache curl
+                        curl -LO "https://get.helm.sh/helm-v3.12.0-linux-amd64.tar.gz"
+                        tar -xzf helm-v3.12.0-linux-amd64.tar.gz
+                        mv linux-amd64/helm /usr/local/bin/helm
                         apk add --no-cache docker-cli --repository https://dl-cdn.alpinelinux.org/alpine/edge/community
                         docker build -t task10:${BUILD_NUMBER} ./module6
                         echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
@@ -37,8 +41,7 @@ pipeline {
        stage('Deploy to k8s') {
            steps {
                withCredentials([file(credentialsId: 'kubeconfig-minikube', variable: 'KUBECONFIG')]) {
-                   sh "sed -i 's/IMAGE_TAG/${BUILD_NUMBER}/g' module6/deployment.yml"
-                   sh 'kubectl apply -f module6/deployment.yml'
+                   sh 'helm upgrade --install my-app ./module6/helm-charts/my-app-chart --set image.tag=${BUILD_NUMBER}'
                }
            }
        }
