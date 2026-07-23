@@ -19,6 +19,9 @@ pipeline {
                         tar -xzf helm-v3.12.0-linux-amd64.tar.gz
                         mv linux-amd64/helm /usr/local/bin/helm
                         apk add --no-cache docker-cli --repository https://dl-cdn.alpinelinux.org/alpine/edge/community
+                        curl -LO "https://dl.k8s.io/release/v1.25.0/bin/linux/amd64/kubectl"
+                        chmod +x kubectl
+                        mv kubectl /usr/local/bin/
                         docker build -t task10:${BUILD_NUMBER} ./module6
                         echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
                         docker tag task10:${BUILD_NUMBER} ${DOCKER_USERNAME}/task10:${BUILD_NUMBER}
